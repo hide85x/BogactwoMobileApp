@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './transaction.dart'; // importuje wszystkie NIE PRYWATNE propsy
+import 'package:intl/intl.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,6 +29,10 @@ class MyHomePage extends StatelessWidget {
       date: DateTime.now(),
     )
   ];
+
+  // String titleInput;
+  // String amountInput;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +40,7 @@ class MyHomePage extends StatelessWidget {
         title: Text("Bogactwa"),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         // domyslnie w columnie bedzie center, to troche jak flex
         children: <Widget>[
@@ -48,9 +53,42 @@ class MyHomePage extends StatelessWidget {
             width: double.infinity,
             child: Card(
               child: Text("CHART",
-                  style: TextStyle(fontSize: 30), textAlign: TextAlign.center),
+                  style: TextStyle(color: Colors.white, fontSize: 17),
+                  textAlign: TextAlign.center),
               color: Colors.blue,
-              elevation: 5,
+              elevation: 2,
+            ),
+          ),
+          Card(
+            elevation: 1,
+            child: Container(
+              padding: EdgeInsets.all(2),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: "Title:"),
+                    // onChanged: (val) => {
+                    //   titleInput = val,
+                    // },
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: "Amount:"),
+                    // onChanged: (val) => {
+                    //   amountInput = val,
+                    // },
+                  ),
+                  FlatButton(
+                    color: Colors.blue,
+                    child: Text("Add shit"),
+                    textColor: Colors.white,
+                    onPressed: () {
+                      print(titleInput);
+                      print(amountInput);
+                    },
+                  )
+                ],
+              ),
             ),
           ),
           Column(
@@ -58,20 +96,20 @@ class MyHomePage extends StatelessWidget {
               return Card(
                 margin: EdgeInsets.all(2),
                 child: Container(
-                   decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 2),
-                            color: Colors.white),
-                   padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width: 2),
+                      color: Colors.white),
+                  padding: EdgeInsets.all(5),
                   child: Row(
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(5),
                         margin:
-                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                            EdgeInsets.symmetric(vertical: 1, horizontal: 10),
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.blue, width: 3),
+                            border: Border.all(color: Colors.blue, width: 2),
                             color: Colors.white),
-                        child: Text(tx.amount.toString(),
+                        child: Text('\$${tx.amount}', //tx.amount.toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.w800,
                                 fontSize: 20,
@@ -82,15 +120,13 @@ class MyHomePage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.only(bottom: 10),
                             child: Text(tx.title,
                                 style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w800
-                                )),
+                                    fontSize: 19, fontWeight: FontWeight.w800)),
                           ),
-                          Text(tx.date.toString(),
-                              style: TextStyle(fontSize: 15, color: Colors.grey))
+                          Text(DateFormat.yMMMEd().format(tx.date),
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.grey))
                         ],
                       )
                     ],
