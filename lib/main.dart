@@ -13,11 +13,26 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter App',
       theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-        accentColor: Colors.deepOrangeAccent,
-        
-        // appBarTheme: Colors.deepOrange
-      ),
+          primarySwatch: Colors.orange,
+          accentColor: Colors.orange[400],
+          fontFamily: 'Quicksand',
+          textTheme:ThemeData.light().textTheme.copyWith(
+            title: TextStyle(
+              fontFamily: 'Opensans',
+              fontSize: 18
+            )
+          ) ,
+          appBarTheme: AppBarTheme(
+            textTheme: ThemeData.light().textTheme.copyWith(
+                  title: TextStyle(
+                      // wtne sposob wszytskie nasze title beda takie wlasnie jak tu okreslone
+                      fontFamily: 'Opensans',
+                      fontSize: 27,
+                      // fontWeight: FontWeight.bold
+                      ),
+                ),
+          )
+          ),
       home: MyHomePage(),
     );
   }
@@ -30,12 +45,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: 't1',
-      title: "piwko",
-      amount: 9.99,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 't1',
+    //   title: "piwko",
+    //   amount: 9.99,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   void _addTransaction(String txTitle, double txAmount) {
@@ -65,7 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) { //context podajemy nizej w metodzie _startAddNewTx
+  Widget build(BuildContext context) {
+    //context podajemy nizej w metodzie _startAddNewTx
     return Scaffold(
       appBar: AppBar(
         title: Text("Bogactwa"),

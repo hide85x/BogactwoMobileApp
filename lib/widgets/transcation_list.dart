@@ -11,67 +11,108 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-  
       height: 450,
 
       // wersja list view z builder, bez mapowania po naszej liscie
       //dla bardzo duzych list albo o nieznandej d;lugosci
-      child: ListView.builder(
-        // zamiast uzywac Continer opakowqanego SingleChildScrollView uzywamy ListView
-        //ale potrzebuje miec usatwiony height rodzica, bo sam ListView ma heigh infinit
-        //bez contaienra rodzicem bedzie Column z UserTrans. a column zabiera cały height jaki ma dostepny
-        //dlatego oapkuwuejmy listView w container z ustalonym height
-        itemBuilder: (ctx, index) {
-          return Card(
-            elevation: 10,
-            margin: EdgeInsets.all(1),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).primaryColorLight,
-                  width: 2,
+      child: transactions.isEmpty
+          ? Column(
+              children: <Widget>[
+                SizedBox(height: 15),
+                Text(
+                  'No transactions so far You lazy slub...',
+                  style: Theme.of(context).textTheme.title,
                 ),
-              ),
-              padding: EdgeInsets.all(5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: Theme.of(context).primaryColorDark,
-                            width: 2),
-                        color: Colors.white),
-                    child: Text(
-                        '\$${transactions[index].amount.toStringAsFixed(2)}', //transactions[index].amount.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 20,
-                            color: Theme.of(context).primaryColorDark)),
+                SizedBox(
+                  // mozemy sobie robic marginesy
+                  height: 20,
+                ),
+                Container(
+                  width: 130,
+                  child: Image.asset(
+                    'assets/images/waiting.png',
+                    fit: BoxFit.contain,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Container(
-                        child: Text(transactions[index].title,
-                            style: TextStyle(
-                                fontSize: 19, fontWeight: FontWeight.w600)),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Spend some \$\$\$',
+                  style: Theme.of(context).textTheme.title,
+                ),
+                Container(
+                  child: 
+                  Icon(Icons.arrow_drop_down, size: 50, color: Colors.deepOrange,),
+                )
+              ],
+            )
+          : ListView.builder(
+              // zamiast uzywac Continer opakowqanego SingleChildScrollView uzywamy ListView
+              //ale potrzebuje miec usatwiony height rodzica, bo sam ListView ma heigh infinit
+              //bez contaienra rodzicem bedzie Column z UserTrans. a column zabiera cały height jaki ma dostepny
+              //dlatego oapkuwuejmy listView w container z ustalonym height
+              itemBuilder: (ctx, index) {
+                return Card(
+                  elevation: 10,
+                  margin: EdgeInsets.all(1),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).primaryColorLight,
+                        width: 2,
                       ),
-                      Text(DateFormat.yMMMEd().format(transactions[index].date),
-                          style: TextStyle(fontSize: 15, color: Colors.grey))
-                    ],
-                  )
-                ],
-              ),
-            ),
-          );
-        },
+                    ),
+                    padding: EdgeInsets.all(5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Theme.of(context).primaryColorDark,
+                                  width: 2),
+                              color: Colors.white),
+                          child: Text(
+                              '\$${transactions[index].amount.toStringAsFixed(2)}', //transactions[index].amount.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 20,
+                                  color: Theme.of(context).primaryColorDark)),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(transactions[index].title,
+                                  style: Theme.of(context).textTheme.title
+                                  //  TextStyle(
+                                  //   fontSize: 19,
+                                  //   fontWeight: FontWeight.w600,
+                                  // ),
+                                  ),
+                              Text(
+                                  DateFormat.yMMMEd()
+                                      .format(transactions[index].date),
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.grey))
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
 
-        itemCount: transactions.length, //tyle razy wykona sie nasz itemBuilder
-      ),
+              itemCount:
+                  transactions.length, //tyle razy wykona sie nasz itemBuilder
+            ),
     );
   }
 }
