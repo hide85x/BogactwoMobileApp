@@ -35,10 +35,13 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return 
+    
+    Card(
+      
       elevation: 40,
       child: Container(
-        margin: EdgeInsets.all(5),
+        margin: EdgeInsets.all(2),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[

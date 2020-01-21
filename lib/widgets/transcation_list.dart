@@ -11,39 +11,39 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
+      height: 350,
 
       // wersja list view z builder, bez mapowania po naszej liscie
       //dla bardzo duzych list albo o nieznandej d;lugosci
       child: transactions.isEmpty
           ? Column(
               children: <Widget>[
-                SizedBox(height: 15),
                 Text(
                   'No transactions so far You lazy slub...',
                   style: Theme.of(context).textTheme.title,
                 ),
                 SizedBox(
                   // mozemy sobie robic marginesy
-                  height: 20,
+                  height: 10,
                 ),
                 Container(
-                  width: 130,
+                  width: 100,
                   child: Image.asset(
                     'assets/images/waiting.png',
                     fit: BoxFit.contain,
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  // siezied box to spoko opcja zey robic separatory marginesy itp
+                  height: 10,
                 ),
                 Text(
                   'Spend some \$\$\$',
                   style: Theme.of(context).textTheme.title,
                 ),
                 Container(
-                  child: 
-                  Icon(Icons.arrow_drop_down, size: 50, color: Colors.deepOrange,),
+                  child: Icon(Icons.arrow_drop_down,
+                      size: 50, color: Colors.deepOrange),
                 )
               ],
             )
@@ -53,61 +53,97 @@ class TransactionList extends StatelessWidget {
               //bez contaienra rodzicem bedzie Column z UserTrans. a column zabiera cały height jaki ma dostepny
               //dlatego oapkuwuejmy listView w container z ustalonym height
               itemBuilder: (ctx, index) {
+                //rozwiazanie z ListStyle
                 return Card(
-                  elevation: 10,
-                  margin: EdgeInsets.all(1),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Theme.of(context).primaryColorLight,
-                        width: 2,
+                  elevation: 6,
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.orange[200],
+                      radius: 70,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: FittedBox(
+                          child: Text(
+                            '\$${transactions[index].amount.toStringAsFixed(2)}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    padding: EdgeInsets.all(5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Theme.of(context).primaryColorDark,
-                                  width: 2),
-                              color: Colors.white),
-                          child: Text(
-                              '\$${transactions[index].amount.toStringAsFixed(2)}', //transactions[index].amount.toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 20,
-                                  color: Theme.of(context).primaryColorDark)),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 20),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(transactions[index].title,
-                                  style: Theme.of(context).textTheme.title
-                                  //  TextStyle(
-                                  //   fontSize: 19,
-                                  //   fontWeight: FontWeight.w600,
-                                  // ),
-                                  ),
-                              Text(
-                                  DateFormat.yMMMEd()
-                                      .format(transactions[index].date),
-                                  style: TextStyle(
-                                      fontSize: 15, color: Colors.grey))
-                            ],
-                          ),
-                        )
-                      ],
+                    title: Text(
+                      transactions[index].title,
+                      style: Theme.of(context).textTheme.title,
                     ),
+                    subtitle: Text(
+                      DateFormat.yMMMEd().format(transactions[index].date),
+                    ),
+                    trailing: Icon(
+                      Icons.delete,
+                      color: Colors.red,),
                   ),
                 );
+
+                //ponizej mamy liste zrobioną z custom Card widgeta
+
+                // Card(
+                //   elevation: 10,
+                //   margin: EdgeInsets.all(1),
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       border: Border.all(
+                //         color: Theme.of(context).primaryColorLight,
+                //         width: 2,
+                //       ),
+                //     ),
+                //     padding: EdgeInsets.all(5),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.start,
+                //       children: <Widget>[
+                //         Container(
+                //           padding: EdgeInsets.all(5),
+                //           margin: EdgeInsets.symmetric(
+                //               vertical: 10, horizontal: 10),
+                //           decoration: BoxDecoration(
+                //               border: Border.all(
+                //                   color: Theme.of(context).primaryColorDark,
+                //                   width: 2),
+                //               color: Colors.white),
+                //           child: Text(
+                //               '\$${transactions[index].amount.toStringAsFixed(2)}', //transactions[index].amount.toString(),
+                //               style: TextStyle(
+                //                   fontWeight: FontWeight.w800,
+                //                   fontSize: 20,
+                //                   color: Theme.of(context).primaryColorDark)),
+                //         ),
+                //         Container(
+                //           margin: EdgeInsets.only(left: 20),
+                //           child: Column(
+                //             mainAxisAlignment: MainAxisAlignment.start,
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             children: <Widget>[
+                //               Text(transactions[index].title,
+                //                   style: Theme.of(context).textTheme.title
+                //                   //  TextStyle(
+                //                   //   fontSize: 19,
+                //                   //   fontWeight: FontWeight.w600,
+                //                   // ),
+                //                   ),
+                //               Text(
+                //                   DateFormat.yMMMEd()
+                //                       .format(transactions[index].date),
+                //                   style: TextStyle(
+                //                       fontSize: 15, color: Colors.grey))
+                //             ],
+                //           ),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // );
               },
 
               itemCount:
